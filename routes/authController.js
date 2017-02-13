@@ -1,11 +1,9 @@
 var express = require('express');
-var router = express.Router();
-
-// User model
+const passport = require("passport");
+const bcrypt         = require("bcrypt");
 const User           = require("../models/user");
 
-// Bcrypt to encrypt passwords
-const bcrypt         = require("bcrypt");
+var router = express.Router();
 const bcryptSalt     = 10;
 
 /* GET users listing. */
@@ -44,6 +42,23 @@ router.post("/signup", (req, res, next) => {
       }
     });
   });
+});
+
+router.get("/login", (req, res, next) => {
+
+  res.render("auth/login", { "message": req.flash("error") });
+});
+
+router.post("/login", passport.authenticate("local", {
+  successRedirect: "/secret",
+  failureRedirect: "/login",
+  failureFlash: true,
+  passReqToCallback: true
+}));
+
+router.get("/logout", (req, res) => {
+  req.logout();
+  res.redirect("/");
 });
 
 module.exports = router;

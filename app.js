@@ -7,7 +7,10 @@ var bodyParser = require('body-parser');
 const expressLayouts = require('express-ejs-layouts');
 const portDB = require('./config').portDB;
 const databaseName = require('./config').databaseName;
-
+const session       = require("express-session");
+const passportConfig = require('./helpers/passportHelper');
+const passport = require('passport');
+const flash = require("connect-flash");
 
 const mongoose = require("mongoose");
 mongoose.connect(`mongodb://localhost:${portDB}/${databaseName}`);
@@ -34,8 +37,22 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
+
+// session
+app.use(session({
+  secret: "passport-local-strategy",
+  resave: true,
+  saveUninitialized: true
+}));
+app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
+passportConfig(passport);
+
 app.use('/', authController);
+app.use('/', index);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
