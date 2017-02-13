@@ -1,11 +1,11 @@
-body {
+/*body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
 }
-
+*/
 .main {
 	padding-top: 50px;
 }
@@ -25,4 +25,10 @@ a {
 
 .container .text-muted {
 	margin: 20px 0;
+}
+
+.signup {
+	width: 380px;
+	padding-top: 50px;
+	margin: 0 auto;
 }
