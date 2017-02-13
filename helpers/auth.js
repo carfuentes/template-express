@@ -1,5 +1,6 @@
 const bcrypt        = require("bcrypt");
 const LocalStrategy = require("passport-local").Strategy;
+const FbStrategy = require('passport-facebook').Strategy;
 let User = require('../models/user');
 
 module.exports = {
@@ -27,15 +28,23 @@ module.exports = {
 	},
 
 	passport: function(passport) {
+		// passport.serializeUser((user, cb) => {
+		//   cb(null, user);
+		// });
+
+		// passport.deserializeUser((user, cb) => {
+		//   User.findOne({ "_id": user._id }, (err, user) => {
+		//     if (err) { return cb(err); }
+		//     cb(null, user);
+		//   });
+		// });
+
 		passport.serializeUser((user, cb) => {
 		  cb(null, user);
 		});
-
 		passport.deserializeUser((user, cb) => {
-		  User.findOne({ "_id": user._id }, (err, user) => {
-		    if (err) { return cb(err); }
-		    cb(null, user);
-		  });
+			
+		  cb(null, user);
 		});
 
 		passport.use(new LocalStrategy({
@@ -55,7 +64,15 @@ module.exports = {
 			    return next(null, user);
 			  });
 			}));
+
+		passport.use(new FbStrategy({
+		  clientID: "1436835103016946",
+		  clientSecret: "669db7ec309d25cb78ad986b195022c7",
+		  callbackURL: "http://localhost:3000/auth/facebook/callback"
+		}, (accessToken, refreshToken, profile, done) => {
+		  done(null, profile);
+		}));
 	}
-	
+
 }
 	
