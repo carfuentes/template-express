@@ -2,6 +2,8 @@ const bcrypt        = require("bcrypt");
 const LocalStrategy = require("passport-local").Strategy;
 const FbStrategy = require('passport-facebook').Strategy;
 let User = require('../models/user');
+const clientID = require('../config').facebook.clientID;
+const clientSecret = require('../config').facebook.clientSecret;
 
 module.exports = {
 
@@ -66,8 +68,8 @@ module.exports = {
 			}));
 
 		passport.use(new FbStrategy({
-		  clientID: "1436835103016946",
-		  clientSecret: "669db7ec309d25cb78ad986b195022c7",
+		  clientID: clientID,
+		  clientSecret: clientSecret,
 		  callbackURL: "http://localhost:3000/auth/facebook/callback"
 		}, (accessToken, refreshToken, profile, done) => {
 		  done(null, profile);
