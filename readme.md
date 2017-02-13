@@ -13,3 +13,5 @@ In this repo there are to branches
 ```
 $ npm install
 ```
+
+__You need to setup the config file in `config.js`__
