@@ -11,7 +11,10 @@
           <label for="passwordInput">Password</label>
           <input type="password" class="form-control" id="password" placeholder="Password" name="password">
         </div>
-        <% if (typeof(message) != "undefined") { %>
+        <!-- <% if (typeof(message) != "undefined") { %> -->
+          <!-- <div class="alert alert-danger" role="alert"><%= message %></div> -->
+        <!-- <% } %> -->
+        <% if ( message != "" ) { %>
           <div class="alert alert-danger" role="alert"><%= message %></div>
         <% } %>
         <button type="submit" class="btn btn-primary btn-block">Submit</button>

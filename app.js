@@ -8,7 +8,7 @@ const expressLayouts = require('express-ejs-layouts');
 const portDB = require('./config').portDB;
 const databaseName = require('./config').databaseName;
 const session       = require("express-session");
-const passportConfig = require('./helpers/passportHelper');
+const auth = require('./helpers/auth');
 const passport = require('passport');
 const flash = require("connect-flash");
 
@@ -48,7 +48,7 @@ app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
-passportConfig(passport);
+auth.passport(passport);
 
 app.use('/', authController);
 app.use('/', index);
