@@ -2,8 +2,8 @@ let config = {
 	portDB: 27017,
 	databaseName: "templateExpress",
 	facebook: {
-		clientID: "",
-		clientSecret: "",
+		clientID: process.env.FACEBOOK_CLIENT_ID,
+		clientSecret: process.env.FACEBOOK_CLIENTSECRET,
 	}
 }
 

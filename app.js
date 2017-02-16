@@ -11,6 +11,7 @@ const session       = require("express-session");
 const auth = require('./helpers/auth');
 const passport = require('passport');
 const flash = require("connect-flash");
+require("dotenv").config();
 
 const mongoose = require("mongoose");
 mongoose.connect(`mongodb://localhost:${portDB}/${databaseName}`);

@@ -66,10 +66,10 @@ module.exports = {
 			    return next(null, user);
 			  });
 			}));
-
+		
 		passport.use(new FbStrategy({
-		  clientID: clientID,
-		  clientSecret: clientSecret,
+		  clientID: process.env.FACEBOOK_CLIENT_ID,
+		  clientSecret: process.env.FACEBOOK_CLIENTSECRET,
 		  callbackURL: "http://localhost:3000/auth/facebook/callback"
 		}, (accessToken, refreshToken, profile, done) => {
 		  done(null, profile);
