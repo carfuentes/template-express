@@ -1,10 +1,10 @@
-var express = require('express');
-const passport = require("passport");
-const bcrypt         = require("bcrypt");
-const User           = require("../models/user");
+const express  = require('express');
+const bcrypt   = require("bcrypt");
+const User     = require("../models/user");
+const passport = require("../helpers/passport");
 
-var router = express.Router();
-const bcryptSalt     = 10;
+const router     = express.Router();
+const bcryptSalt = 10;
 
 /* GET users listing. */
 router.get('/signup', function(req, res, next) {
@@ -61,8 +61,22 @@ router.post("/login", passport.authenticate("local", {
 }));
 
 router.get("/logout", (req, res) => {
+  console.log('logout locals before: ', res.locals);
+  console.log('logout session before: ', req.session);
   req.logout();
-  res.redirect("/");
+  delete res.locals.currentUser;
+  delete req.session.passport;
+  console.log('logout after: ', res.locals);
+  console.log('logout session after: ', req.session);
+  res.redirect('/');
+  
+  
 });
+
+router.get("/auth/facebook",          passport.authenticate("facebook"));
+router.get("/auth/facebook/callback", passport.authenticate("facebook", {
+  successRedirect: "/secret",
+  failureRedirect: "/"
+}));
 
 module.exports = router;
