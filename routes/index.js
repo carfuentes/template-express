@@ -1,7 +1,6 @@
 var express = require('express');
-// const ensureLogin = require("connect-ensure-login");
-var router = express.Router();
-var auth = require('../helpers/auth');
+var router  = express.Router();
+var auth    = require('../helpers/auth');
 
 
 /* GET home page. */
@@ -10,12 +9,11 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/secret', auth.checkLoggedIn('You must be login', '/login'), function(req, res, next) {
-	console.log(req.user);
   res.render('secret', { user: JSON.stringify(req.user) });
 });
 
 router.get('/admin', auth.checkLoggedIn('You must be login', '/login'), auth.checkCredentials('ADMIN'), function(req, res, next) {
-	console.log(req.user);
+	// console.log(req.user);
   res.render('admin', { user: JSON.stringify(req.user) });
 });
 

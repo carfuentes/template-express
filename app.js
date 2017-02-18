@@ -1,34 +1,31 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const express        = require('express');
+const path           = require('path');
+const favicon        = require('serve-favicon');
+const logger         = require('morgan');
+const cookieParser   = require('cookie-parser');
+const bodyParser     = require('body-parser');
 const expressLayouts = require('express-ejs-layouts');
-const portDB = require('./config').portDB;
-const databaseName = require('./config').databaseName;
-const session       = require("express-session");
-const auth = require('./helpers/auth');
-const passport = require('passport');
-const flash = require("connect-flash");
-require("dotenv").config();
+const portDB         = require('./config').portDB;
+const databaseName   = require('./config').databaseName;
+const session        = require("express-session");
+const auth           = require('./helpers/auth');
+const flash          = require("connect-flash");
+const mongoose       = require("mongoose");
 
-const mongoose = require("mongoose");
+const index          = require('./routes/index');
+const authController = require('./routes/authController');
+
+let app = express();
+
+// Connection to DB
 mongoose.connect(`mongodb://localhost:${portDB}/${databaseName}`);
 
-// routes
-var index = require('./routes/index');
-var authController = require('./routes/authController');
-
-var app = express();
-
-// view engine setup
-
-app.use(expressLayouts);
 app.set('layout', 'layouts/main');
-
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+
+app.use(expressLayouts);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -37,19 +34,22 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+// app.locals.title = 'Title your App';
 
 // session
 app.use(session({
-  secret: "passport-local-strategy",
-  resave: true,
-  saveUninitialized: true
+  secret           : "passport-local-strategy",
+  resave           : true,
+  saveUninitialized: true,
+  cookie           : { maxAge: 60000 }
 }));
-app.use(flash());
 
+app.use(flash());
+const passport = require('./helpers/passport');
 app.use(passport.initialize());
 app.use(passport.session());
-auth.passport(passport);
+
+app.use(auth.setCurrentUser);
 
 app.use('/', authController);
 app.use('/', index);
