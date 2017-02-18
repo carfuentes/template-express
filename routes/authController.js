@@ -61,13 +61,11 @@ router.post("/login", passport.authenticate("local", {
 }));
 
 router.get("/logout", (req, res) => {
-  console.log('logout locals before: ', res.locals);
-  console.log('logout session before: ', req.session);
   req.logout();
   delete res.locals.currentUser;
   delete req.session.passport;
-  console.log('logout after: ', res.locals);
-  console.log('logout session after: ', req.session);
+  // delete currentUser and passport properties 
+  // becasuse when we calling req.logout() is leaving an empty object inside both properties.
   res.redirect('/');
   
   

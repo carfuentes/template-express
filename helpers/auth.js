@@ -1,16 +1,12 @@
 module.exports = {
 	setCurrentUser: function(req, res, next) {
-		console.log('session in setCurrentUser: ', req.session);
-		
 	  if (req.session.passport) {
-	  	console.log('if session passport: ', req.session);
 	    res.locals.currentUser = req.session.passport;
 	    res.locals.isUserLoggedIn = true;
 	  } else {
 	  	// delete res.locals.currentUser;
 	    res.locals.isUserLoggedIn = false;
 	  }
-	  console.log('res.locals in setCurrentUser: ', res.locals);
 	  next();
 	},
 
