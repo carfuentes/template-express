@@ -9,5 +9,4 @@ Using passport-local and passport-facebook strategies
 ```
 $ npm install
 ```
-
-__You need to setup the config file in `config.js`__
+You need to setup the config file in `config.js`
