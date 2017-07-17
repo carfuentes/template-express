@@ -30,13 +30,13 @@ passport.use(new LocalStrategy({
 	  });
 	}));
 
-passport.use(new FbStrategy({
-	  clientID: FACEBOOK_CLIENT_ID,
-	  clientSecret: FACEBOOK_CLIENTSECRET,
-	  callbackURL: "http://localhost:3000/auth/facebook/callback"
-	}, (accessToken, refreshToken, profile, done) => {
-	  done(null, profile);
-	}));
+// passport.use(new FbStrategy({
+// 	  clientID: FACEBOOK_CLIENT_ID,
+// 	  clientSecret: FACEBOOK_CLIENTSECRET,
+// 	  callbackURL: "http://localhost:3000/auth/facebook/callback"
+// 	}, (accessToken, refreshToken, profile, done) => {
+// 	  done(null, profile);
+// 	}));
 
 	
 module.exports = passport;

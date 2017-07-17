@@ -33,3 +33,29 @@ a {
 	padding-top: 50px;
 	margin: 0 auto;
 }
+
+/*ESTILOS BUSCADOR*/
+
+.title {
+	font-weight: bold;
+	font-size: 1.3rem;
+}
+
+.diet {
+	background-color: #D6F6F6;
+}
+
+.recipe {
+	width:100%;
+	height: 27rem;
+	padding:2rem;
+}
+
+.image {
+	float:left;
+}
+
+.info {
+	width:42%;
+	float:right;
+}
