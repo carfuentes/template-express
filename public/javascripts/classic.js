@@ -20,10 +20,6 @@ $('.form-filters').on("submit", (e)=> {
     e.preventDefault();
 })
 
-// $("#ingredients").on("submit", (e)=> {
-//     e.preventDefault();
-// })
-
 
 $('.form-filters').children().on("change", (event)=> {
    myDiet=getParameters('Diet');
@@ -49,9 +45,9 @@ $('.form-filters').children().on("change", (event)=> {
 function showRecipes (response) {
   $(".output").html('');
   console.log(response.matches)
-  response.matches.forEach((el)=> {
+  response.matches.forEach((el,index)=> {
     $(".output").append(`
-                    <div class=recipe> 
+                    <div class=recipe id="recipe${index}"> 
                         <div class="image">
                             <img src=${el.smallImageUrls[0].replace(/s90$/,"s350")}> 
                         </div>
@@ -63,7 +59,21 @@ function showRecipes (response) {
                     
                     </div>
                     `)
+  
+
+  $.ajax( {
+      url:`http://api.yummly.com/v1/api/recipe/${el.id}?_app_id=7b6372ab&_app_key=446dc1e04dcdedcfe61b2515ec058e88`,
+      method:"GET",
+      success: function(res) { 
+          console.log(res);
+          $(`#recipe${index}`).append(`<span class= 'title'> Sources: ${res.source.sourceRecipeUrl} </span>`)
+      },
+      error:handleError
   })
+
+  })
+
+
 }
 
 function createForms (filter,selector) {
